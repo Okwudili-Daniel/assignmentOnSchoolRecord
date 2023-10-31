@@ -7,11 +7,11 @@ import {ObjectId} from "mongodb"
 export const createDetails= async (req: Request, res: Response) =>{
     try {
         await client.connect()
-        const {name, course, subject, score} = req.body
+        const {name, course, subject, score} = req.body;
         
-        const details = new bookModel(name, course, subject, score)
+        const details = new bookModel(name, course, subject, score);
 
-        await db.insertOne(details)
+        await db.insertOne(details);
         
         return res.status(stautCode.CREATED).json({
             message: "Book created",
@@ -23,88 +23,123 @@ export const createDetails= async (req: Request, res: Response) =>{
         })
     }
 }
-// export const readBook= async (req: Request, res: Response) =>{
-//     try {
-//         await client.connect()
+export const readDetails= async (req: Request, res: Response) =>{
+    try {
+        await client.connect()
 
-//        const book= await db.find().toArray()
+        const details = await db.find().toArray();        
 
-//         return res.status(stautCode.OK).json({
-//             message: "All Books Gotten",
-//             data: book
-//         })
-//     } catch (error) {
-//         return res.status(stautCode.BAD_REQUEST).json({
-//             message: "Error Reading Book"
-//         })
-//     }
-// }
-// export const readBookByID= async (req: Request, res: Response) =>{
-//     try {
-//         await client.connect();
-//         const {bookID} = req.params
+        return res.status(stautCode.OK).json({
+            message: "All performane Gotten",
+            data: details
+        })
+    } catch (error) {
+        return res.status(stautCode.BAD_REQUEST).json({
+            message: "Error Reading Book"
+        })
+    }
+}
+export const readDetailByID= async (req: Request, res: Response) =>{
+    try {
+        await client.connect()
+        const {performaneId} = req.params
 
-//         const book = await db.findOne({_id: new ObjectId(bookID)})
+        const details = await db.findOne({_id: new ObjectId(performaneId)})
 
-//         return res.status(stautCode.OK).json({
-//             message: `${bookID} gotten`,
-//             data: book
-//         })
-//     } catch (error) {
-//         return res.status(stautCode.BAD_REQUEST).json({
-//             message: "Error Reading Book"
-//         })
-//     }
-// }
-// export const readBookByCategory= async (req: Request, res: Response) =>{
-//     try {
-//         await client.connect();
-//         const {category} = req.body
+        return res.status(stautCode.OK).json({
+            message: `${performaneId} gotten`,
+            data: details
+        })
+    } catch (error) {
+        return res.status(stautCode.BAD_REQUEST).json({
+            message: "Error Reading Book"
+        })
+    }
+}
+export const readDetailByScore= async (req: Request, res: Response) =>{
+    try {
+        await client.connect();
+        const {score} = req.body
+
+        const performance = await db.find({score}).toArray();
         
-//         const book = await db.find({ category}).toArray();
+        return res.status(stautCode.OK).json({
+            message: `${score} gotten`,
+            data: performance
+        })
+    } catch (error) {
+        return res.status(stautCode.BAD_REQUEST).json({
+            message: "Error Reading Book"
+        })
+    }
+}
+export const readDetailByCourse= async (req: Request, res: Response) =>{
+    try {
+        await client.connect();
+        const {course} = req.body
+
+        const performance = await db.find({course}).toArray();
         
-//         return res.status(stautCode.OK).json({
-//             message: `${category} gotten`,
-//             data: book
-//         })
-//     } catch (error) {
-//         return res.status(stautCode.BAD_REQUEST).json({
-//             message: "Error Reading Book"
-//         })
-//     }
-// }
+        return res.status(stautCode.OK).json({
+            message: `${course} gotten`,
+            data: performance
+        })
+    } catch (error) {
+        return res.status(stautCode.BAD_REQUEST).json({
+            message: "Error Reading Book"
+        })
+    }
+}
+export const readDetailByName= async (req: Request, res: Response) =>{
+    try {
+        await client.connect();
+        const {name} = req.body
 
-// export const updateBook= async (req: Request, res: Response) =>{
-//     try {
-//      await client.connect();
-//      const {bookId} = req.params
-//      const {title, interesting} = req.body;
+        const performance = await db.find({name}).toArray();
+        
+        return res.status(stautCode.OK).json({
+            message: `${name} performance gotten`,
+            data: performance
+        })
+    } catch (error) {
+        return res.status(stautCode.BAD_REQUEST).json({
+            message: "Error Reading Book"
+        })
+    }
+}
 
-//      const book = await db.updateOne({_id: new ObjectId(bookId)}, {$set: {title, interesting}})
+export const updateBook= async (req: Request, res: Response) =>{
+    try {
+     await client.connect();
+     const {performanceId} = req.params
+    const {subject,score} = req.body
 
-//         return res.status(stautCode.OK).json({
-//             message: `${bookId} updated`,
-//             data: book
-//         })
-//     } catch (error) {
-//         return res.status(stautCode.BAD_REQUEST).json({
-//             message: "Error Reading Book"
-//         })
-//     }
-// }
-// export const deleteBook= async (req: Request, res: Response) =>{
-//     try {
-//      await client.connect();
-//      const {bookId} = req.params
+     const book = await db.updateOne({_id: new ObjectId(performanceId)}, {$set: {subject, score, }})
 
-//      await db.deleteOne({_id: new ObjectId(bookId)})
+        return res.status(stautCode.OK).json({
+            message: `${performanceId} updated`,
+            data: book
+        })
+    } catch (error) {
+        return res.status(stautCode.BAD_REQUEST).json({
+            message: "Error Reading Book"
+        })
+    }
+}
 
-//         return res.status(stautCode.OK).json({
-//             message: `${bookId} deleted successfully`,
-//         })
-//     } catch (error) {
-//         return res.status(stautCode.BAD_REQUEST).json({
-//             message: "Error Reading Book"
-//         })
-//     }
-// }
+export const deleteBook= async (req: Request, res: Response) =>{
+    try {
+     await client.connect();
+     const {performanceId} = req.params
+
+     await db.deleteOne({_id: new ObjectId(performanceId)})
+
+        return res.status(stautCode.OK).json({
+            message: `${performanceId} deleted successfully`,
+        })
+    } catch (error) {
+        return res.status(stautCode.BAD_REQUEST).json({
+            message: "Error Reading Book"
+        })
+    }
+}
