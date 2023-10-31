@@ -8,7 +8,7 @@ const mainConnection = async() =>{
     try {
         await client.connect();
 
-        return "Database Connected"
+        return "Database Connected..."
     } catch (error) {
         console.log(error)
     }
@@ -22,4 +22,4 @@ mainConnection().then((res) =>{
     client.close()
 })
 
-export const db = client.db("testing").collection("test")
+export const db = client.db("Schools").collection("results")

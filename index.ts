@@ -3,7 +3,7 @@ import"./utils/dbConfig"
 import cors from "cors"
 import mainApp from "./mainApp"
 
-const port: number= 6655;
+const port: number= 7755;
 const app: Application = express();
 
 app.use(cors())

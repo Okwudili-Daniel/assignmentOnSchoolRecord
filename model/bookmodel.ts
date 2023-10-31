@@ -2,20 +2,16 @@ import {ObjectId} from "mongodb"
 
 export class bookModel{
     public _id: ObjectId;
-    public title: string
-    public author: string
-    public description: string
-    public category: string
-    public numbersOfPages: number
-    public interesting: boolean
+    public name: string
+    public course: string
+    public subject: string
+    public score: number
 
-    constructor(title: string, author: string, description: string, category: string, numbersOfPages: number, interesting: boolean) {
+    constructor(name: string, course: string, subject: string, score: number,) {
         this._id = new ObjectId();
-        this.title = title;
-        this.author = author;
-        this.description = description;
-        this.category = category;
-        this.numbersOfPages = numbersOfPages;
-        this.interesting = interesting;
+        this.name = name;
+        this.course = course;
+        this.subject = subject;
+        this.score = score;
     }
 }
